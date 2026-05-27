@@ -43,9 +43,9 @@
   </fieldset>
 
   <script type="module">
-    // Pulled from the bundled ESM build of @aura/fhe-client.
-    // Build locally with `cd clients/typescript && npm install && npm run build`
-    // or point at the published CDN: https://esm.sh/@aura/fhe-client
+    // This example still targets the published ESM CDN shape for @aura/fhe-client.
+    // Until the package is published, treat this file as reference-only and bundle
+    // the TypeScript client from source in your own app.
     import { connect } from "https://esm.sh/@aura/fhe-client@0.3.0";
 
     const $ = (id) => document.getElementById(id);

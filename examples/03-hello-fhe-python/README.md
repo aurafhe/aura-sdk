@@ -1,7 +1,8 @@
 # 03 — Hello FHE (Python)
 
 ```bash
-pip install aura-fhe
+git clone https://github.com/aurafhe/aura-sdk.git
+pip install ./aura-sdk/clients/python
 python hello.py
 ```
 

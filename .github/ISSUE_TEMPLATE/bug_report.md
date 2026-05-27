@@ -15,9 +15,9 @@ assignees: ''
 <smallest possible code or command that fails>
 ```
 
-**Expected**: 
+**Expected**:
 
-**Actual**: 
+**Actual**:
 
 **Logs / error message**:
 ```

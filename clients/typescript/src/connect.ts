@@ -5,7 +5,7 @@
  *   const fhe = await connect()
  *
  * Handles the three things every new user trips over:
- *   1. Default base URL = process.env.AFHE_API_URL ?? 'https://localhost:8443'.
+ *   1. Default base URL = process.env.AFHE_API_URL ?? 'https://api.afhe.io:8443'.
  *   2. Self-signed TLS — auto-accepted when the host is localhost / 127.0.0.1.
  *      (In Node only; browsers trust the system CA store.)
  *   3. Auto-load — tells the server to load the standard key paths
@@ -17,9 +17,9 @@ import { AfheClient, type AfheClientOptions, AfheApiError } from "./index";
 
 export interface ConnectOptions extends Partial<AfheClientOptions> {
   /**
-   * Trust self-signed TLS certificates. Defaults to `true` for localhost,
-   * `false` for any other host. Only effective in Node.js (browsers use the
-   * system CA store).
+   * Trust self-signed TLS certificates on localhost. Defaults to `true` for
+   * localhost, `false` for any other host. Only effective in Node.js
+   * (browsers use the system CA store).
    */
   insecureTLS?: boolean;
   /**
@@ -39,7 +39,7 @@ export interface ConnectOptions extends Partial<AfheClientOptions> {
   healthCheck?: boolean;
 }
 
-const DEFAULT_BASE_URL = "https://localhost:8443";
+const DEFAULT_BASE_URL = "https://api.afhe.io:8443";
 const DEFAULT_KEYS = { skb: "file/skb", pkb: "file/pkb", dictb: "file/dictb" } as const;
 
 /**
@@ -47,10 +47,13 @@ const DEFAULT_KEYS = { skb: "file/skb", pkb: "file/pkb", dictb: "file/dictb" } a
  *
  * Reads `AFHE_API_URL` from the environment if `baseUrl` is not given.
  * Tolerates the self-signed certificate that the reference local server
- * ships with, but only for `localhost` / `127.0.0.1`.
+ * ships with, but only for localhost.
  */
 export async function connect(opts: ConnectOptions = {}): Promise<AfheClient> {
   const baseUrl = opts.baseUrl ?? readEnv("AFHE_API_URL") ?? DEFAULT_BASE_URL;
+  if (opts.insecureTLS === true && !isLocalhost(baseUrl)) {
+    throw new Error("connect(): insecureTLS is only allowed for localhost");
+  }
   const insecureTLS = opts.insecureTLS ?? isLocalhost(baseUrl);
   const autoLoad = opts.autoLoad ?? true;
 

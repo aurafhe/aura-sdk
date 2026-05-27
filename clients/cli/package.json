@@ -5,7 +5,11 @@
   "bin": {
     "fhe": "./bin/fhe.js"
   },
-  "files": ["bin", "README.md", "LICENSE"],
+  "files": [
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
   "type": "module",
   "engines": {
     "node": ">=18.0.0"
@@ -13,14 +17,25 @@
   "scripts": {
     "test": "node --test test/*.test.js"
   },
-  "keywords": ["fhe", "cli", "homomorphic", "encryption", "aura", "afhe"],
+  "keywords": [
+    "fhe",
+    "cli",
+    "homomorphic",
+    "encryption",
+    "aura",
+    "afhe"
+  ],
   "author": "Aura FHE",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aurafhe/fhe-client.git",
+    "url": "https://github.com/aurafhe/aura-sdk.git",
     "directory": "clients/cli"
   },
+  "bugs": {
+    "url": "https://github.com/aurafhe/aura-sdk/issues"
+  },
+  "homepage": "https://github.com/aurafhe/aura-sdk/tree/main/clients/cli#readme",
   "dependencies": {
     "@aura/fhe-client": "^0.3.0"
   }

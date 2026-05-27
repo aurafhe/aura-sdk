@@ -42,8 +42,7 @@ jobs:
           go-version: "1.21"
       - run: go build ./...
       - run: go vet ./...
-      # Live tests are skipped here; they need a running coprocessor.
-      # Compile-only check above is enough for CI.
+      - run: go test ./...
 
   python:
     name: Python client
@@ -61,8 +60,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: pip install -e . pytest
       - run: python -c "import aura_fhe; print(aura_fhe.__version__)"
-      # Smoke tests auto-skip when no coprocessor is reachable.
-      - run: pytest -v
+      - run: pytest -q
 
   cli:
     name: CLI
@@ -83,8 +81,8 @@ jobs:
           npm run build
       - name: Link local TS client
         run: |
-          npm install ../typescript
-      - run: node bin/fhe.js --help
+          npm install --no-save ../typescript
+      - run: npm test
 
   docs:
     name: Lint markdown
@@ -94,4 +92,4 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20.x
-      - run: npx --yes markdownlint-cli2 "**/*.md" "#node_modules" "#**/node_modules" || true
+      - run: npx --yes markdownlint-cli2 "**/*.md" "#node_modules" "#**/node_modules"

@@ -2,7 +2,7 @@
 
 ## Reporting Vulnerabilities
 
-If you discover a security vulnerability in @aura/shield-sdk, please report it responsibly.
+If you discover a security vulnerability in @aura/fhe-client, please report it responsibly.
 
 **DO NOT open a public GitHub issue for security vulnerabilities.**
 
@@ -20,7 +20,8 @@ We will acknowledge receipt within 48 hours and provide a timeline for resolutio
 
 | Version | Supported |
 |---------|-----------|
-| 0.2.x   | Current   |
+| 0.3.x   | Current   |
+| 0.2.x   | Deprecated |
 | 0.1.x   | Deprecated |
 
 ## Security Considerations

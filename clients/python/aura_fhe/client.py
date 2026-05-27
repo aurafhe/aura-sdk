@@ -18,7 +18,7 @@ from urllib.parse import urlparse
 Domain = str  # "int" | "float" | "string" | "binary"
 Ciphertext = str
 
-DEFAULT_BASE_URL = "https://localhost:8443"
+DEFAULT_BASE_URL = "https://api.afhe.io:8443"
 DEFAULT_KEYS = {"skb": "file/skb", "pkb": "file/pkb", "dictb": "file/dictb"}
 
 
@@ -74,6 +74,8 @@ class AfheClient:
 
     def __post_init__(self) -> None:
         self.base_url = self.base_url.rstrip("/")
+        if self.insecure_tls and not _is_localhost(self.base_url):
+            raise ValueError("insecure_tls is only allowed for localhost")
         if self.insecure_tls:
             self._ctx = ssl.create_default_context()
             self._ctx.check_hostname = False
@@ -262,7 +264,7 @@ def connect(
 
     Reads ``$AFHE_API_URL`` from the environment when ``base_url`` is ``None``.
     Tolerates the self-signed certificate that the reference local server
-    ships with, but only for localhost / 127.0.0.1.
+    ships with, but only for localhost.
     """
     url = base_url or os.getenv("AFHE_API_URL") or DEFAULT_BASE_URL
     if insecure_tls is None:

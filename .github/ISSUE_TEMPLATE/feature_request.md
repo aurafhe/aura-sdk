@@ -6,9 +6,9 @@ labels: enhancement
 assignees: ''
 ---
 
-**What you want**: 
+**What you want**:
 
-**Why** (the use case it unlocks): 
+**Why** (the use case it unlocks):
 
 **Sketch** (optional): the API shape you have in mind.
 

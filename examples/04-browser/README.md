@@ -16,6 +16,7 @@ Notes:
 - The browser cannot accept self-signed certificates without a manual click-through
   in chrome://settings. Either install a real cert on the coprocessor or visit
   `https://localhost:8443/health` first and accept the warning.
-- The ESM import resolves to `https://esm.sh/@aura/fhe-client@0.3.0`. To use a
-  locally built version, run `npm install && npm run build` inside
-  `clients/typescript/` and import from the local `dist/`.
+- The current HTML file still points at `https://esm.sh/@aura/fhe-client@0.3.0`,
+  which will only work after the npm package is published. Until then, treat this
+  example as a reference UI and bundle the TypeScript client from source in your
+  own app.

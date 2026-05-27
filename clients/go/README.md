@@ -1,10 +1,13 @@
 # aura-fhe — Go client
 
 Standard library only. Works against any server that speaks the Aura FHE
-protocol (`docs/PROTOCOL.md`).
+protocol ([`../../docs/PROTOCOL.md`](../../docs/PROTOCOL.md)).
+
+This client is available directly from the repo today. Until the first tagged
+release lands, pin it to `@main`.
 
 ```bash
-go get github.com/aurafhe/fhe-client/clients/go
+go get github.com/aurafhe/aura-sdk/clients/go@main
 ```
 
 ```go
@@ -15,12 +18,14 @@ import (
     "fmt"
     "log"
 
-    afhe "github.com/aurafhe/fhe-client/clients/go"
+    afhe "github.com/aurafhe/aura-sdk/clients/go"
 )
 
 func main() {
     ctx := context.Background()
-    fhe, err := afhe.Connect(ctx)                  // localhost:8443, self-signed TLS ok, keys loaded
+    fhe, err := afhe.Connect(ctx, afhe.ConnectOptions{
+        BaseURL: "https://api.afhe.io:8443",
+    })
     if err != nil { log.Fatal(err) }
 
     a, _   := fhe.EncryptInt(ctx, "25")
@@ -37,8 +42,8 @@ func main() {
 
 | Option | Default | Notes |
 |---|---|---|
-| `BaseURL` | `$AFHE_API_URL` or `https://localhost:8443` | Server URL |
-| `InsecureTLS` | `true` iff host is localhost | Pass `afhe.Bool(true)` to force on other hosts |
+| `BaseURL` | `$AFHE_API_URL` or `https://api.afhe.io:8443` | Server URL |
+| `InsecureTLS` | `true` iff host is localhost | Insecure TLS is only allowed on localhost |
 | `AutoLoad` | `true` | Server-side `POST /load` with the standard key paths |
 | `Keys` | `file/skb` / `file/pkb` / `file/dictb` | Override individual paths |
 | `HealthCheck` | `true` | Probe `GET /health` before returning |
@@ -50,12 +55,9 @@ func main() {
 If `Connect` is too magical, build the client by hand:
 
 ```go
-tr := &http.Transport{
-    TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-}
 c, _ := afhe.NewClient(afhe.ClientOptions{
     BaseURL:    "https://api.example.com:8443",
-    HTTPClient: &http.Client{Transport: tr, Timeout: 30 * time.Second},
+    HTTPClient: &http.Client{Timeout: 30 * time.Second},
 })
 c.Load(ctx, afhe.LoadOptions{SKB: "/etc/afhe/skb", PKB: "/etc/afhe/pkb", DictB: "/etc/afhe/dictb"})
 ```
@@ -105,5 +107,6 @@ opts := afhe.KeygenOptions{
 
 ## Caveats
 
-Keep the same keygen profile across environments. See `docs/KEY_MANAGEMENT.md`
-for the recommended values and rotation flow.
+Keep the same keygen profile across environments. See
+[`../../docs/KEY_MANAGEMENT.md`](../../docs/KEY_MANAGEMENT.md) for the
+recommended values and rotation flow.

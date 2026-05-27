@@ -1,9 +1,13 @@
 # Examples
 
-Each folder is a self-contained, runnable example. They all assume a
-coprocessor is reachable at `https://localhost:8443` — start one with
-your preferred Aura FHE server or point them at any other URL via the
-`AFHE_API_URL` env var.
+Each folder is a self-contained, runnable example. Clone the repo first, then
+point the client at your coprocessor:
+
+```bash
+export AFHE_API_URL=https://api.afhe.io:8443
+```
+
+For local development, the clients still default to `https://localhost:8443`.
 
 | # | Folder | Language | What it shows |
 |---|---|---|---|

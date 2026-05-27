@@ -52,14 +52,14 @@ Compute (any operation listed by 'fhe functions'):
   fhe verify <message> <signature>
 
 Global flags (override the saved config):
-  --url URL          Server base URL (default: $AFHE_API_URL or https://localhost:8443)
-  --insecure         Accept self-signed TLS (auto-on for localhost)
+  --url URL          Server base URL (default: $AFHE_API_URL or https://api.afhe.io:8443)
+  --insecure         Accept self-signed TLS on localhost
   --no-autoload      Don't auto-load keys
   --quiet            Print result only, no trailing newline
   --help, -h         Show this help
 
 Examples:
-  fhe connect --url https://localhost:8443
+  fhe connect --url https://api.afhe.io:8443
   fhe enc int 25 > a.ct
   fhe enc int 17 > b.ct
   fhe add int "$(cat a.ct)" "$(cat b.ct)" | fhe dec int
@@ -132,7 +132,7 @@ async function cmdConnect(flags) {
   await saveConfig(cfg);
 
   out(`saved config to ${CONFIG_PATH}`);
-  out(`  baseUrl:      ${cfg.baseUrl ?? "https://localhost:8443"}`);
+  out(`  baseUrl:      ${cfg.baseUrl ?? "https://api.afhe.io:8443"}`);
   out(`  insecureTLS:  ${cfg.insecureTLS ?? "(auto)"}`);
   if (cfg.keys) out(`  keys: ${JSON.stringify(cfg.keys)}`);
 }

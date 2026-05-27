@@ -28,8 +28,9 @@ func getEnv(k, fallback string) string {
 
 func newTestClient(t *testing.T) *Client {
 	t.Helper()
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	tr := &http.Transport{}
+	if isLocalhost(baseURL) {
+		tr.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	}
 	c, err := NewClient(ClientOptions{
 		BaseURL:    baseURL,
@@ -37,6 +38,11 @@ func newTestClient(t *testing.T) *Client {
 	})
 	if err != nil {
 		t.Fatalf("NewClient: %v", err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	if _, err := c.Health(ctx); err != nil {
+		t.Skipf("live coprocessor not reachable at %s: %v", baseURL, err)
 	}
 	return c
 }

@@ -62,11 +62,11 @@ POST /keygen
 Content-Type: application/json
 
 {
-  "m": 65537,
-  "n": 1024,
-  "q": 15,
+  "m": 2,
+  "n": 4,
+  "q": 2147483647,
   "p": 512,
-  "delta": 0,
+  "delta": 0.001,
   "skb_file":  "file/skb",
   "pkb_file":  "file/pkb",
   "dictb_file":"file/dictb",
@@ -85,6 +85,10 @@ Content-Type: application/json
 > Some server builds (in particular `keyxx-core-c`) do not support keygen and
 > will return `500`. In that case, generate keys with the reference toolchain
 > and place them on disk before calling `POST /load`.
+>
+> The example above matches the repo's recommended profile. If you need a
+> different parameter set, document the exact security and performance tradeoff
+> before changing it.
 
 ---
 

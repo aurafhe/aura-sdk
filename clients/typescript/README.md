@@ -1,17 +1,26 @@
 # @aura/fhe-client
 
 TypeScript client for the Aura Fully Homomorphic Encryption coprocessor.
-**Zero dependencies. Isomorphic.** Works in Node 18+, modern browsers, Deno,
-Bun, and Cloudflare Workers.
+**Zero dependencies. Isomorphic.** CI verifies Node 18+; modern browsers should
+work anywhere a WHATWG `fetch` implementation is available.
+
+This package is **build from source for now**. Clone the repo, build this client,
+then link it from your app with a local path dependency.
 
 ```bash
-npm install @aura/fhe-client
+git clone https://github.com/aurafhe/aura-sdk.git
+cd aura-sdk/clients/typescript
+npm install
+npm run build
+# in your app: npm install /path/to/aura-sdk/clients/typescript
 ```
 
 ```ts
 import { connect } from '@aura/fhe-client'
 
-const fhe = await connect()                  // localhost:8443, auto-TLS, auto-load keys
+const fhe = await connect({
+  baseUrl: process.env.AFHE_API_URL ?? 'https://api.afhe.io:8443',
+})                                          // auto-TLS, auto-load keys
 const sum = await fhe.addInt(
   await fhe.encryptInt(25),
   await fhe.encryptInt(17),
@@ -29,8 +38,8 @@ The one-line entry point. Returns a ready-to-use `AfheClient`.
 
 ```ts
 const fhe = await connect({
-  baseUrl:      'https://api.example.com:8443',  // default: $AFHE_API_URL or https://localhost:8443
-  insecureTLS:  false,                            // default: true iff host is localhost
+  baseUrl:      'https://api.example.com:8443',  // default: $AFHE_API_URL or https://api.afhe.io:8443
+  insecureTLS:  false,                            // only allowed for localhost
   autoLoad:     true,                             // default: true — POSTs /load with the standard key paths
   keys: {                                         // override the key paths
     skb:   'file/skb',
@@ -44,11 +53,8 @@ const fhe = await connect({
 })
 ```
 
-For self-signed TLS on **non-localhost** hosts, opt in explicitly:
-
-```ts
-const fhe = await connect({ baseUrl: 'https://10.0.0.5:8443', insecureTLS: true })
-```
+Self-signed TLS is supported only on localhost. For any other host, install a
+real certificate before connecting.
 
 ---
 

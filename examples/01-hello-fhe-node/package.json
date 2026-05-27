@@ -4,6 +4,6 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@aura/fhe-client": "^0.3.0"
+    "@aura/fhe-client": "file:../../clients/typescript"
   }
 }

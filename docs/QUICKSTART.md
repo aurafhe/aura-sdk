@@ -2,13 +2,23 @@
 
 Five minutes from clone to first decrypted result.
 
+This repo is **build from source for now**: the npm packages and PyPI package are
+not published yet, and the Go client should be pinned to `@main` until the first
+stable tag lands.
+
 ---
 
-## 1. Point at a coprocessor
+## 1. Clone the repo and point at a coprocessor
+
+```bash
+git clone https://github.com/aurafhe/aura-sdk.git
+cd aura-sdk
+export AFHE_API_URL=https://api.afhe.io:8443
+```
 
 You need a compatible Aura FHE coprocessor reachable over HTTPS.
 
-By default every client uses:
+For local development, every client defaults to:
 
 ```text
 https://localhost:8443
@@ -17,11 +27,11 @@ https://localhost:8443
 Health check:
 
 ```bash
-curl -k https://localhost:8443/health
+curl -fsSL "$AFHE_API_URL/health"
 ```
 
-You can also override the URL with `AFHE_API_URL` or a client-specific `baseUrl`
-option.
+You can override the URL with `AFHE_API_URL` or a client-specific `baseUrl`
+option. For a first remote connection, use `https://api.afhe.io:8443`.
 
 ---
 
@@ -30,13 +40,18 @@ option.
 ### TypeScript
 
 ```bash
-npm install @aura/fhe-client
+cd clients/typescript
+npm install
+npm run build
+# in your app: npm install /path/to/aura-sdk/clients/typescript
 ```
 
 ```ts
 import { connect } from '@aura/fhe-client'
 
-const fhe = await connect()
+const fhe = await connect({
+  baseUrl: process.env.AFHE_API_URL ?? 'https://api.afhe.io:8443',
+})
 const a = await fhe.encryptInt(25)
 const b = await fhe.encryptInt(17)
 const sum = await fhe.addInt(a, b)
@@ -47,11 +62,13 @@ console.log(await fhe.decryptInt(sum)) // "42"
 ### Go
 
 ```bash
-go get github.com/aurafhe/fhe-client/clients/go
+go get github.com/aurafhe/aura-sdk/clients/go@main
 ```
 
 ```go
-c, _ := afhe.Connect(ctx)
+c, _ := afhe.Connect(ctx, afhe.ConnectOptions{
+    BaseURL: "https://api.afhe.io:8443",
+})
 a, _ := c.EncryptInt(ctx, "25")
 b, _ := c.EncryptInt(ctx, "17")
 sum, _ := c.AddInt(ctx, a, b)
@@ -61,21 +78,25 @@ pt, _ := c.DecryptInt(ctx, sum)
 ### Python
 
 ```bash
-pip install aura-fhe
+pip install ./clients/python
 ```
 
 ```python
 from aura_fhe import connect
 
-fhe = connect()
+fhe = connect(base_url="https://api.afhe.io:8443")
 print(fhe.decrypt_int(fhe.add_int(fhe.encrypt_int(25), fhe.encrypt_int(17))))
 ```
 
 ### CLI
 
 ```bash
-npm install -g @aura/fhe-cli
-fhe connect
+cd clients/cli
+npm install ../typescript
+npm install
+npm link
+
+fhe connect --url https://api.afhe.io:8443
 fhe enc int 25 > a.ct
 fhe enc int 17 > b.ct
 fhe add int "$(cat a.ct)" "$(cat b.ct)" | fhe dec int
@@ -107,8 +128,7 @@ loading flow.
 ### TLS errors on localhost
 
 The SDK auto-trusts self-signed certificates only for `localhost`. If you point
-at another host, install a valid certificate or opt into insecure TLS
-explicitly.
+at another host, install a valid certificate there first.
 
 ### Keys not loaded
 

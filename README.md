@@ -10,18 +10,39 @@ the same HTTPS+JSON protocol.
 
 ---
 
+## Install status
+
+This repo is **build from source for now**.
+
+- `@aura/fhe-client` is not published on npm yet
+- `@aura/fhe-cli` is not published on npm yet
+- `aura-fhe` is not published on PyPI yet
+- the Go client is usable from the repo, but does not have a stable tagged release yet
+
+Clone the repo, build the client you need, and point it at:
+
+```bash
+export AFHE_API_URL=https://api.afhe.io:8443
+```
+
 ## Quickstart
 
 ### TypeScript
 
 ```bash
-npm install @aura/fhe-client
+git clone https://github.com/aurafhe/aura-sdk.git
+cd aura-sdk/clients/typescript
+npm install
+npm run build
+# in your app: npm install /path/to/aura-sdk/clients/typescript
 ```
 
 ```ts
 import { connect } from '@aura/fhe-client'
 
-const fhe = await connect()
+const fhe = await connect({
+  baseUrl: process.env.AFHE_API_URL ?? 'https://api.afhe.io:8443',
+})
 const a = await fhe.encryptInt(25)
 const b = await fhe.encryptInt(17)
 const sum = await fhe.addInt(a, b)
@@ -32,13 +53,15 @@ console.log(await fhe.decryptInt(sum)) // "42"
 ### Go
 
 ```bash
-go get github.com/aurafhe/fhe-client/clients/go
+go get github.com/aurafhe/aura-sdk/clients/go@main
 ```
 
 ```go
-import afhe "github.com/aurafhe/fhe-client/clients/go"
+import afhe "github.com/aurafhe/aura-sdk/clients/go"
 
-c, _ := afhe.Connect(ctx)
+c, _ := afhe.Connect(ctx, afhe.ConnectOptions{
+    BaseURL: "https://api.afhe.io:8443",
+})
 a, _ := c.EncryptInt(ctx, "25")
 b, _ := c.EncryptInt(ctx, "17")
 sum, _ := c.AddInt(ctx, a, b)
@@ -50,13 +73,14 @@ fmt.Println(pt) // "42"
 ### Python
 
 ```bash
-pip install aura-fhe
+git clone https://github.com/aurafhe/aura-sdk.git
+pip install ./aura-sdk/clients/python
 ```
 
 ```python
 from aura_fhe import connect
 
-fhe = connect()
+fhe = connect(base_url="https://api.afhe.io:8443")
 a = fhe.encrypt_int(25)
 b = fhe.encrypt_int(17)
 
@@ -66,8 +90,13 @@ print(fhe.decrypt_int(fhe.add_int(a, b)))  # "42"
 ### CLI
 
 ```bash
-npm install -g @aura/fhe-cli
-fhe connect
+git clone https://github.com/aurafhe/aura-sdk.git
+cd aura-sdk/clients/cli
+npm install ../typescript
+npm install
+npm link
+
+fhe connect --url https://api.afhe.io:8443
 fhe enc int 25 > a.ct
 fhe enc int 17 > b.ct
 fhe add int "$(cat a.ct)" "$(cat b.ct)" | fhe dec int
@@ -110,7 +139,7 @@ Full details: [docs/KEY_MANAGEMENT.md](docs/KEY_MANAGEMENT.md)
 ```text
 clients/
   typescript/   @aura/fhe-client
-  go/           github.com/aurafhe/fhe-client/clients/go
+  go/           github.com/aurafhe/aura-sdk/clients/go
   python/       aura-fhe
   cli/          @aura/fhe-cli
 
@@ -137,8 +166,8 @@ docs/
 
 Point the SDK at any compatible Aura FHE coprocessor:
 
-- local default: `https://localhost:8443`
-- override with `AFHE_API_URL`
+- default: `https://api.afhe.io:8443`
+- local dev: `export AFHE_API_URL=https://localhost:8443`
 - or pass `baseUrl` / `BaseURL` / `base_url`
 
 `connect()` also auto-loads the standard key paths by default:
@@ -153,7 +182,7 @@ Point the SDK at any compatible Aura FHE coprocessor:
 
 - Docs: [docs.afhe.io](https://docs.afhe.io)
 - Project: [afhe.io](https://afhe.io)
-- Issues: [github.com/aurafhe/fhe-client/issues](https://github.com/aurafhe/fhe-client/issues)
+- Issues: [github.com/aurafhe/aura-sdk/issues](https://github.com/aurafhe/aura-sdk/issues)
 
 ## License
 

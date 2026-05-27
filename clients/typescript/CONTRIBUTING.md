@@ -1,12 +1,12 @@
-# Contributing to @aura/shield-sdk
+# Contributing to @aura/fhe-client
 
 We welcome contributions. This guide covers how to get started.
 
 ## Development Setup
 
 ```bash
-git clone https://github.com/aurafhe/shield-sdk.git
-cd shield-sdk
+git clone https://github.com/aurafhe/aura-sdk.git
+cd aura-sdk/clients/typescript
 npm install
 ```
 
@@ -47,7 +47,7 @@ src/
 
 ## Reporting Issues
 
-- Use [GitHub Issues](https://github.com/aurafhe/shield-sdk/issues)
+- Use [GitHub Issues](https://github.com/aurafhe/aura-sdk/issues)
 - For security vulnerabilities, see [SECURITY.md](./SECURITY.md)
 
 ## License

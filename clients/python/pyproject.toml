@@ -24,8 +24,8 @@ dependencies = []
 [project.urls]
 Homepage      = "https://afhe.io"
 Documentation = "https://docs.afhe.io"
-Repository    = "https://github.com/aurafhe/fhe-client"
-Issues        = "https://github.com/aurafhe/fhe-client/issues"
+Repository    = "https://github.com/aurafhe/aura-sdk"
+Issues        = "https://github.com/aurafhe/aura-sdk/issues"
 
 [tool.setuptools]
 packages = ["aura_fhe"]

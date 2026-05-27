@@ -2,12 +2,19 @@
 
 Shell access to the Aura FHE coprocessor.
 
+This package is **build from source for now**. Clone the repo, install the local
+TypeScript client first, then link the CLI from this directory.
+
 ```bash
-npm install -g @aura/fhe-cli
+git clone https://github.com/aurafhe/aura-sdk.git
+cd aura-sdk/clients/cli
+npm install ../typescript
+npm install
+npm link
 ```
 
 ```bash
-fhe connect --url https://localhost:8443   # one-time setup, saved to ~/.aura-fhe/config.json
+fhe connect --url https://api.afhe.io:8443   # one-time setup, saved to ~/.aura-fhe/config.json
 fhe health                                  # {"status":"ok"}
 
 # Encrypt → add → decrypt

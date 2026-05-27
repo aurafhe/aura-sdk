@@ -2,8 +2,12 @@
 # 05-cli — encrypt, compute, decrypt from the shell.
 #
 # Prerequisite:
-#   npm install -g @aura/fhe-cli
-#   fhe connect --url https://localhost:8443
+#   git clone https://github.com/aurafhe/aura-sdk.git
+#   cd aura-sdk/clients/cli
+#   npm install ../typescript
+#   npm install
+#   npm link
+#   fhe connect --url https://api.afhe.io:8443
 
 set -euo pipefail
 

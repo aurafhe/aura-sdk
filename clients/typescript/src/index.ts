@@ -14,8 +14,8 @@
  *   POST /call
  *   POST /verify
  *
- * Works in any environment with a WHATWG `fetch` implementation: modern
- * browsers, Node.js 18+, Deno, Bun, Cloudflare Workers.
+ * Works anywhere a WHATWG `fetch` implementation is available. CI currently
+ * verifies Node.js 18+.
  */
 
 // ---------------------------------------------------------------------------

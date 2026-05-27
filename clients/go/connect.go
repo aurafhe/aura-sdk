@@ -14,12 +14,12 @@ import (
 // ConnectOptions configures Connect. All fields are optional.
 type ConnectOptions struct {
 	// BaseURL overrides the server URL. Defaults to $AFHE_API_URL or
-	// "https://localhost:8443".
+	// "https://api.afhe.io:8443".
 	BaseURL string
 
-	// InsecureTLS accepts self-signed certificates. When zero, it is
-	// inferred: true for localhost / 127.0.0.1, false otherwise.
-	// Use a *bool to distinguish "unset" from "explicitly false".
+	// InsecureTLS accepts self-signed certificates on localhost. When zero, it
+	// is inferred: true for localhost / 127.0.0.1, false otherwise. Use a *bool
+	// to distinguish "unset" from "explicitly false".
 	InsecureTLS *bool
 
 	// AutoLoad tells the server to load the standard key block paths
@@ -47,7 +47,7 @@ type ConnectOptions struct {
 //
 // Reads $AFHE_API_URL if BaseURL is empty. Tolerates the self-signed
 // certificate that the reference local server ships with, but only for
-// localhost / 127.0.0.1.
+// localhost.
 func Connect(ctx context.Context, opts ...ConnectOptions) (*Client, error) {
 	o := ConnectOptions{}
 	if len(opts) > 0 {
@@ -59,12 +59,15 @@ func Connect(ctx context.Context, opts ...ConnectOptions) (*Client, error) {
 		if env := os.Getenv("AFHE_API_URL"); env != "" {
 			baseURL = env
 		} else {
-			baseURL = "https://localhost:8443"
+			baseURL = "https://api.afhe.io:8443"
 		}
 	}
 
 	insecure := false
 	if o.InsecureTLS != nil {
+		if *o.InsecureTLS && !isLocalhost(baseURL) {
+			return nil, fmt.Errorf("afhe: insecure TLS is only allowed for localhost")
+		}
 		insecure = *o.InsecureTLS
 	} else {
 		insecure = isLocalhost(baseURL)
