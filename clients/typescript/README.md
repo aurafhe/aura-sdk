@@ -4,15 +4,20 @@ TypeScript client for the Aura Fully Homomorphic Encryption coprocessor.
 **Zero dependencies. Isomorphic.** CI verifies Node 18+; modern browsers should
 work anywhere a WHATWG `fetch` implementation is available.
 
-This package is **build from source for now**. Clone the repo, build this client,
-then link it from your app with a local path dependency.
+Published on npm from the [aura-sdk](https://github.com/aurafhe/aura-sdk) monorepo
+(`clients/typescript/`).
+
+```bash
+npm install @aura/fhe-client
+```
+
+To hack on the client itself, clone the repo and work in `clients/typescript/`:
 
 ```bash
 git clone https://github.com/aurafhe/aura-sdk.git
 cd aura-sdk/clients/typescript
 npm install
-npm run build
-# in your app: npm install /path/to/aura-sdk/clients/typescript
+npm test
 ```
 
 ```ts

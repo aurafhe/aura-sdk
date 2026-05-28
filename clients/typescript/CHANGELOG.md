@@ -5,6 +5,7 @@ All notable changes to `@aura/fhe-client` will be documented in this file.
 ## [0.3.0] - 2026-05-26
 
 ### Added
+- npm publish from `clients/typescript/` inside the `aurafhe/aura-sdk` monorepo
 - `connect()` coverage for localhost-only insecure TLS behavior
 - Fractional `delta` support in key generation requests
 

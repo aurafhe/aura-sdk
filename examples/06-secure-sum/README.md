@@ -4,8 +4,6 @@ Alice and Bob each hold a private integer. They want the sum without
 revealing their input to the other party or to the compute provider.
 
 ```bash
-cd clients/typescript && npm install && npm run build
-cd ../../examples/06-secure-sum
 npm install
 export AFHE_API_URL=https://api.afhe.io:8443
 node index.js 2 3

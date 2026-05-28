@@ -3,8 +3,6 @@
 Encrypt → compute → decrypt in JavaScript.
 
 ```bash
-cd clients/typescript && npm install && npm run build
-cd ../../examples/01-hello-fhe-node
 npm install
 export AFHE_API_URL=https://api.afhe.io:8443
 node index.js

@@ -46,6 +46,9 @@
     "url": "https://github.com/aurafhe/aura-sdk/issues"
   },
   "homepage": "https://github.com/aurafhe/aura-sdk/tree/main/clients/typescript#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependenciesMeta": {
     "undici": { "optional": true }
   },

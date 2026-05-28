@@ -10,16 +10,21 @@ the same HTTPS+JSON protocol.
 
 ---
 
-## Install status
+## Install
 
-This repo is **build from source for now**.
+### TypeScript (npm)
 
-- `@aura/fhe-client` is not published on npm yet
-- `@aura/fhe-cli` is not published on npm yet
-- `aura-fhe` is not published on PyPI yet
-- the Go client is usable from the repo, but does not have a stable tagged release yet
+```bash
+npm install @aura/fhe-client
+```
 
-Clone the repo, build the client you need, and point it at:
+The package lives in this repo at `clients/typescript/` and publishes to npm as
+`@aura/fhe-client`. No separate repo required.
+
+Go, Python, and CLI clients are still installed from source in this monorepo until
+their registry releases ship.
+
+Point every client at the coprocessor (optional if you use defaults):
 
 ```bash
 export AFHE_API_URL=https://api.afhe.io:8443
@@ -30,11 +35,7 @@ export AFHE_API_URL=https://api.afhe.io:8443
 ### TypeScript
 
 ```bash
-git clone https://github.com/aurafhe/aura-sdk.git
-cd aura-sdk/clients/typescript
-npm install
-npm run build
-# in your app: npm install /path/to/aura-sdk/clients/typescript
+npm install @aura/fhe-client
 ```
 
 ```ts

@@ -2,26 +2,23 @@
 
 Five minutes from clone to first decrypted result.
 
-This repo is **build from source for now**: the npm packages and PyPI package are
-not published yet, and the Go client should be pinned to `@main` until the first
-stable tag lands.
+TypeScript installs from npm (`@aura/fhe-client`). Go, Python, and CLI still
+install from this repo until their registry releases ship.
 
 ---
 
-## 1. Clone the repo and point at a coprocessor
+## 1. Point at a coprocessor
 
 ```bash
-git clone https://github.com/aurafhe/aura-sdk.git
-cd aura-sdk
 export AFHE_API_URL=https://api.afhe.io:8443
 ```
 
 You need a compatible Aura FHE coprocessor reachable over HTTPS.
 
-For local development, every client defaults to:
+Clients default to `https://api.afhe.io:8443`. For a local coprocessor, use:
 
 ```text
-https://localhost:8443
+export AFHE_API_URL=https://localhost:8443
 ```
 
 Health check:
@@ -40,10 +37,7 @@ option. For a first remote connection, use `https://api.afhe.io:8443`.
 ### TypeScript
 
 ```bash
-cd clients/typescript
-npm install
-npm run build
-# in your app: npm install /path/to/aura-sdk/clients/typescript
+npm install @aura/fhe-client
 ```
 
 ```ts

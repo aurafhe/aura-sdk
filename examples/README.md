@@ -1,13 +1,11 @@
 # Examples
 
-Each folder is a self-contained, runnable example. Clone the repo first, then
-point the client at your coprocessor:
+Each folder is a self-contained, runnable example. Node examples install
+`@aura/fhe-client` from npm; Go/Python examples use this repo.
 
 ```bash
 export AFHE_API_URL=https://api.afhe.io:8443
 ```
-
-For local development, the clients still default to `https://localhost:8443`.
 
 | # | Folder | Language | What it shows |
 |---|---|---|---|
