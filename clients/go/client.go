@@ -492,9 +492,120 @@ func (c *Client) MapSm3String(ctx context.Context, a Ciphertext) (string, error)
 	return c.Call(ctx, "MapSm3CipherString", []string{a})
 }
 
+// ---- Cross-type ops -------------------------------------------------------
+
+// Compare compares two ciphertexts. Returns "-1", "0", or "1".
+func (c *Client) Compare(ctx context.Context, a, b Ciphertext) (string, error) {
+	return c.Call(ctx, "Compare", []string{a, b})
+}
+
+// Abs returns the absolute value of a ciphertext.
+func (c *Client) Abs(ctx context.Context, a Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "ABSCipher", []string{a})
+}
+
+// ConcatString concatenates two encrypted strings.
+func (c *Client) ConcatString(ctx context.Context, a, b Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "ConcatString", []string{a, b})
+}
+
+// Substring extracts a substring from an encrypted string.
+func (c *Client) Substring(ctx context.Context, a Ciphertext, start, end string) (Ciphertext, error) {
+	return c.Call(ctx, "Substring", []string{a, start, end})
+}
+
 // ---- CMux -----------------------------------------------------------------
 
 // CMux is an encrypted ternary: sel ? a : b. All three args are Binary ciphertexts.
 func (c *Client) CMux(ctx context.Context, sel, a, b Ciphertext) (Ciphertext, error) {
 	return c.Call(ctx, "CMux", []string{sel, a, b})
+}
+
+// ---- Scientific (Float, need PKB + DictB) ---------------------------------
+
+// Sqrt computes the square root of a float ciphertext.
+func (c *Client) Sqrt(ctx context.Context, a Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "SqrtCipher", []string{a})
+}
+
+// Log computes the natural logarithm of a float ciphertext.
+func (c *Client) Log(ctx context.Context, a Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "LogCipher", []string{a})
+}
+
+// Exp computes e raised to a float ciphertext.
+func (c *Client) Exp(ctx context.Context, a Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "ExpCipher", []string{a})
+}
+
+// Sin computes the sine of a float ciphertext.
+func (c *Client) Sin(ctx context.Context, a Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "SinCipher", []string{a})
+}
+
+// Cos computes the cosine of a float ciphertext.
+func (c *Client) Cos(ctx context.Context, a Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "CosCipher", []string{a})
+}
+
+// Tan computes the tangent of a float ciphertext.
+func (c *Client) Tan(ctx context.Context, a Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "TanCipher", []string{a})
+}
+
+// Asin computes the arcsine of a float ciphertext.
+func (c *Client) Asin(ctx context.Context, a Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "AsinCipher", []string{a})
+}
+
+// Acos computes the arccosine of a float ciphertext.
+func (c *Client) Acos(ctx context.Context, a Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "AcosCipher", []string{a})
+}
+
+// Atan computes the arctangent of a float ciphertext.
+func (c *Client) Atan(ctx context.Context, a Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "AtanCipher", []string{a})
+}
+
+// Sinh computes the hyperbolic sine of a float ciphertext.
+func (c *Client) Sinh(ctx context.Context, a Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "SinhCipher", []string{a})
+}
+
+// Cosh computes the hyperbolic cosine of a float ciphertext.
+func (c *Client) Cosh(ctx context.Context, a Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "CoshCipher", []string{a})
+}
+
+// Tanh computes the hyperbolic tangent of a float ciphertext.
+func (c *Client) Tanh(ctx context.Context, a Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "TanhCipher", []string{a})
+}
+
+// Asinh computes the inverse hyperbolic sine of a float ciphertext.
+func (c *Client) Asinh(ctx context.Context, a Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "AsinhCipher", []string{a})
+}
+
+// Acosh computes the inverse hyperbolic cosine of a float ciphertext.
+func (c *Client) Acosh(ctx context.Context, a Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "AcoshCipher", []string{a})
+}
+
+// Atanh computes the inverse hyperbolic tangent of a float ciphertext.
+func (c *Client) Atanh(ctx context.Context, a Ciphertext) (Ciphertext, error) {
+	return c.Call(ctx, "AtanhCipher", []string{a})
+}
+
+// Power computes c^n^m for a float ciphertext.
+func (c *Client) Power(ctx context.Context, a, n, m string) (Ciphertext, error) {
+	return c.Call(ctx, "PowerCipher", []string{a, n, m})
+}
+
+// ---- Signing --------------------------------------------------------------
+
+// GenSign signs a plaintext input. Requires loaded SKB.
+func (c *Client) GenSign(ctx context.Context, input string) (string, error) {
+	return c.Call(ctx, "GenSign", []string{input})
 }

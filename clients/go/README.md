@@ -75,8 +75,10 @@ c.Load(ctx, afhe.LoadOptions{SKB: "/etc/afhe/skb", PKB: "/etc/afhe/pkb", DictB: 
 | Bitwise | `Xor`, `And`, `Or`, `Not` |
 | Shift / Rotate | `ShiftLeft`, `ShiftRight`, `RotateLeft`, `RotateRight` |
 | Ternary | `CMux` |
-| String | `CompareString`, `SubstringString`, `ToUpperString`, `ToLowerString`, `MapSm3String` |
-| Sign / Verify | `Verify` |
+| Cross-type | `Compare`, `Abs` |
+| String | `CompareString`, `SubstringString`, `ConcatString`, `Substring`, `ToUpperString`, `ToLowerString`, `MapSm3String` |
+| Scientific | `Sqrt`, `Log`, `Exp`, `Sin`, `Cos`, `Tan`, `Asin`, `Acos`, `Atan`, `Sinh`, `Cosh`, `Tanh`, `Asinh`, `Acosh`, `Atanh`, `Power` |
+| Sign / Verify | `GenSign`, `Verify` |
 | Escape hatch | `Call(fn, args)` |
 
 ## Testing
