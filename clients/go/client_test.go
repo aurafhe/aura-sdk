@@ -424,6 +424,14 @@ func TestIntArithmeticV6(t *testing.T) {
 		t.Fatalf("CompareInt: %v", err)
 	}
 	if cmp != "-1" {
+		t.Fatalf("CompareInt(2,3) expected -1, got %s", cmp)
+	}
+
+	cmp, err = c.Compare(ctx, i2, i3)
+	if err != nil {
+		t.Fatalf("Compare: %v", err)
+	}
+	if cmp != "-1" {
 		t.Fatalf("Compare(2,3) expected -1, got %s", cmp)
 	}
 
@@ -472,13 +480,31 @@ func TestStringOps(t *testing.T) {
 		t.Fatalf("CompareString: %v", err)
 	}
 	if res != "-1" {
-		t.Fatalf("Compare('hello','world') expected -1, got %s", res)
+		t.Fatalf("CompareString('hello','world') expected -1, got %s", res)
 	}
 
-	// substring
+	concat, err := c.ConcatString(ctx, sHello, sWorld)
+	if err != nil {
+		t.Fatalf("ConcatString: %v", err)
+	}
+	pt, _ = c.DecryptString(ctx, concat)
+	if pt != "helloworld" {
+		t.Fatalf("Concat expected 'helloworld', got '%s'", pt)
+	}
+
+	// substring (legacy helper)
 	sub, err := c.SubstringString(ctx, sHello, "1", "4")
 	if err != nil {
 		t.Fatalf("SubstringString: %v", err)
+	}
+	pt, _ = c.DecryptString(ctx, sub)
+	if pt != "ell" {
+		t.Fatalf("SubstringString expected 'ell', got '%s'", pt)
+	}
+
+	sub, err = c.Substring(ctx, sHello, "1", "4")
+	if err != nil {
+		t.Fatalf("Substring: %v", err)
 	}
 	pt, _ = c.DecryptString(ctx, sub)
 	if pt != "ell" {

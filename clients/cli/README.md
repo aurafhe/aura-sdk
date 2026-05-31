@@ -3,7 +3,8 @@
 Shell access to the Aura FHE coprocessor.
 
 This package is **build from source for now**. Clone the repo, install the local
-TypeScript client first, then link the CLI from this directory.
+TypeScript client first, then link the CLI from this directory. See
+[INSTALL.md](./INSTALL.md) for tarball and global install options.
 
 ```bash
 git clone https://github.com/aurafhe/aura-sdk.git

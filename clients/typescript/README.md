@@ -11,14 +11,8 @@ Published on npm from the [aura-sdk](https://github.com/aurafhe/aura-sdk) monore
 npm install @aura/fhe-client
 ```
 
-To hack on the client itself, clone the repo and work in `clients/typescript/`:
-
-```bash
-git clone https://github.com/aurafhe/aura-sdk.git
-cd aura-sdk/clients/typescript
-npm install
-npm test
-```
+To hack on the client itself, clone the repo and work in `clients/typescript/`.
+See [INSTALL.md](./INSTALL.md) for local path, tarball, and link workflows.
 
 ```ts
 import { connect } from '@aura/fhe-client'

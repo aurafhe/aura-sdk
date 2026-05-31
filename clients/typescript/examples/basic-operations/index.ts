@@ -11,7 +11,7 @@ import { AfheClient } from '../../src/index'
 
 async function main() {
   const api = new AfheClient({
-    baseUrl: 'https://localhost:8443',
+    baseUrl: process.env.AFHE_API_URL ?? 'https://api.afhe.io:8443',
     timeoutMs: 600_000,
   })
 

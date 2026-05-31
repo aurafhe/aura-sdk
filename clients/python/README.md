@@ -4,7 +4,8 @@ Standard library only. Single import. Works against any server that speaks the
 Aura FHE protocol ([`../../docs/PROTOCOL.md`](../../docs/PROTOCOL.md)).
 
 This package is **build from source for now**. Clone the repo and install this
-directory directly with `pip`.
+directory directly with `pip`. See [INSTALL.md](./INSTALL.md) for wheel and
+editable install options.
 
 ```bash
 git clone https://github.com/aurafhe/aura-sdk.git
